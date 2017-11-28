@@ -3,12 +3,13 @@
     <button @click='increment'>Increment +1</button>
     <button @click='decrement'>Decrement -1</button>
     <h3>Count is {{ getCount }}</h3>
+    <about></about>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-
+import about from './About.vue'
 export default {
   methods: {
     ...mapActions([
@@ -20,12 +21,14 @@ export default {
     ...mapGetters(
        ['getCount']
     )
+  },
+  components: {
+    about
   }
 }
 </script>
-
-<style>
+<style lang="scss">
   body {
-    background: gray;
+    background-color: $purple;
   }
 </style>

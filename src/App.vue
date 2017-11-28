@@ -11,9 +11,12 @@
   </div>
 </template>
 
-<style>
+
+<style lang="scss">
+  @import "./assets/common.scss";
   body {
     font-family: Helvetica, sans-serif;
+    color: $purple;
   }
   .router-link-active{
     color: red ;

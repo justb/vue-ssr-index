@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="topic in topics">
+    <div v-for="(topic,index) in topics" :key="index">
       <p>{{topic.title}}</p>
     </div>
   </div>
