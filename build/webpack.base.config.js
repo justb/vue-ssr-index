@@ -2,7 +2,7 @@ const path = require('path')
 // const projectRoot = path.resolve(__dirname, '../')
 const vueConfig = require('./vue-loader.config')
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
+console.log(path.resolve(__dirname, '../src/assets/common.scss'))
 module.exports = {
   devtool: '#source-map',
   entry: {
@@ -11,7 +11,7 @@ module.exports = {
   },
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
-    extensions: ['.js', '.vue'],
+    extensions: ['.js', '.vue', '.scss'],
     alias: {
       'src': path.resolve(__dirname, '../src'),
       'assets': path.resolve(__dirname, '../src/assets'),
@@ -24,7 +24,6 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'client-bundle.[chunkhash].js'
   },
-
   module: {
     rules: [
       {
@@ -39,42 +38,34 @@ module.exports = {
         loader: 'eslint-loader',
         exclude: /node_modules/
       },
+      // {
+      //   test: /\.s[a|c]ss$/,
+      //   loader: 'css-loader!sass-loader',
+      //   // loader: 'style!css!sass?data=@import "../assets/common.scss";'
+      // },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
           // extractCSS: true,
           loaders: {
-            scss: 'vue-style-loader!css-loader!sass-loader?data=@import "~/assets/common.scss";',
-              
-              // ExtractTextPlugin.extract({
-              //     use: ['css-loader','sass-loader',{
-              //       loader: 'sass-resources-loader',
-              //       options: {
-              //         // Provide path to the file with resources
-              //         resources: path.resolve(__dirname, '../src/assets/common.scss'),
-              //       },
-              //     }],
-              //     fallback: 'vue-style-loader'
-              // })
+            test: /\.s[a|c]ss$/,
+            use: [
+                  'css-loader',
+                  'sass-loader',
+                  {
+                    loader: 'sass-resources-loader',
+                    options: {
+                      // Provide path to the file with resources
+                      resources: './src/assets/common.scss',
+                    },
+                  },
+                ],
+              }
           }
-        }
+        
       },
-      {
-        test: /\.s[a|c]ss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          //如果需要，可以在 sass-loader 之前将 resolve-url-loader 链接进来
-          use: ['css-loader', 'sass-loader',{
-            loader: 'sass-resources-loader',
-            options: {
-              // Provide path to the file with resources
-              resources: path.resolve(__dirname, '../src/assets/common.scss'),
-            },
-          }]
-        }),
-        // loader: 'style!css!sass'
-      },
+
       {
         test: /\.js$/,
         loader: 'babel-loader',
@@ -84,15 +75,15 @@ module.exports = {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]?[hash]'
+          name: 'img/[name].[ext]?[hash]'
         }
       }
     ]
   },
   plugins: [
-    // new ExtractTextPlugin({
-    //   filename:'styles.css',
-    //   allChunks: true
-    // })
+    new ExtractTextPlugin({
+      filename:'styles.css',
+      allChunks: true
+    })
   ]
 }

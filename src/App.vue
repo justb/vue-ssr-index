@@ -13,10 +13,10 @@
 
 
 <style lang="scss">
-  @import "./assets/common.scss";
+  // @import "./assets/common.scss";
   body {
     font-family: Helvetica, sans-serif;
-    color: $purple;
+    color: $purple
   }
   .router-link-active{
     color: red ;

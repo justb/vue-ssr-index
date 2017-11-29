@@ -3,10 +3,11 @@ import App from './App.vue'
 import store from './vuex/store'
 import {createRouter} from './router'
 import { sync } from 'vuex-router-sync'
+import './assets/common.scss'
 export function createApp () {
   // 同步路由状态(route state)到 store
   const router = createRouter()
-  console.log(router)
+  // console.log(router)
   sync(store, router)
   // 创建应用程序实例，将 router 和 store 注入
   const app = new Vue({
