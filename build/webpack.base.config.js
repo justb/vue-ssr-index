@@ -2,7 +2,6 @@ const path = require('path')
 // const projectRoot = path.resolve(__dirname, '../')
 const vueConfig = require('./vue-loader.config')
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-console.log(path.resolve(__dirname, '../src/assets/common.scss'))
 module.exports = {
   devtool: '#source-map',
   entry: {
@@ -47,23 +46,23 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          // extractCSS: true,
-          loaders: {
-            test: /\.s[a|c]ss$/,
-            use: [
-                  'css-loader',
-                  'sass-loader',
-                  {
-                    loader: 'sass-resources-loader',
-                    options: {
-                      // Provide path to the file with resources
-                      resources: './src/assets/common.scss',
+          loaders:{
+            scss:ExtractTextPlugin.extract({
+              use: [
+                    'css-loader',
+                    'sass-loader',
+                    {
+                      loader: 'sass-resources-loader',
+                      options: {
+                        resources: './src/assets/common.scss',
+                      },
                     },
-                  },
-                ],
-              }
+                  ],
+                  // fallback: 'vue-style-loader'
+                })
           }
-        
+
+          }
       },
 
       {
