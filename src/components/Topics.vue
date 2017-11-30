@@ -16,7 +16,7 @@ export default {
     })
   },
 
-  asyncData ({ store }) {
+  asyncData({ store }) {
     return store.dispatch(`getTopics`)
   }
 }

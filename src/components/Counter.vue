@@ -11,25 +11,40 @@
 import { mapGetters, mapActions } from 'vuex'
 import about from './About.vue'
 export default {
+  data() {
+    return {
+      res: [1, 2, 3, 4]
+    }
+  },
   methods: {
-    ...mapActions([
-      'increment',
-      'decrement'
-    ])
+    ...mapActions(['increment', 'decrement']),
+    asy: function() {
+      return new Promise((resolve, reject) => {
+        setTimeout(n => {
+          console.log(new Date())
+          resolve()
+        }, 5000)
+      })
+    },
+    fasdf: async function() {
+      await this.asy()
+    }
   },
   computed: {
-    ...mapGetters(
-       ['getCount']
-    )
+    ...mapGetters(['getCount'])
   },
   components: {
     about
+  },
+  created() {
+    this.fasdf()
+    if (this.res.includes(1)) {
+      console.log(123)
+    }
   }
 }
 </script>
 <style lang="scss">
-// @import "../assets/common.scss";
-  body {
-    // background-color: $purple;
-  }
+body {
+}
 </style>

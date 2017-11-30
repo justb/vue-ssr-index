@@ -58,7 +58,7 @@ module.exports = {
                       },
                     },
                   ],
-                  // fallback: 'vue-style-loader'
+                  fallback: 'vue-style-loader'
                 })
           }
 
