@@ -1,7 +1,7 @@
 const path = require('path')
 // const projectRoot = path.resolve(__dirname, '../')
 const vueConfig = require('./vue-loader.config')
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 module.exports = {
   devtool: '#source-map',
   entry: {
@@ -12,9 +12,9 @@ module.exports = {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     extensions: ['.js', '.vue', '.scss'],
     alias: {
-      'src': path.resolve(__dirname, '../src'),
-      'assets': path.resolve(__dirname, '../src/assets'),
-      'components': path.resolve(__dirname, '../src/components')
+      src: path.resolve(__dirname, '../src'),
+      assets: path.resolve(__dirname, '../src/assets'),
+      components: path.resolve(__dirname, '../src/components')
     }
   },
 
@@ -37,32 +37,30 @@ module.exports = {
         loader: 'eslint-loader',
         exclude: /node_modules/
       },
-      // {
-      //   test: /\.s[a|c]ss$/,
-      //   loader: 'css-loader!sass-loader',
-      //   // loader: 'style!css!sass?data=@import "../assets/common.scss";'
-      // },
+      {
+        test: /\.css$/,
+        loader: 'css-loader!sass-loader'
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          loaders:{
-            scss:ExtractTextPlugin.extract({
+          loaders: {
+            scss: ExtractTextPlugin.extract({
               use: [
-                    'css-loader',
-                    'sass-loader',
-                    {
-                      loader: 'sass-resources-loader',
-                      options: {
-                        resources: './src/assets/common.scss',
-                      },
-                    },
-                  ],
-                  fallback: 'vue-style-loader'
-                })
+                'css-loader',
+                'sass-loader',
+                {
+                  loader: 'sass-resources-loader',
+                  options: {
+                    resources: './src/assets/common.scss'
+                  }
+                }
+              ],
+              fallback: 'vue-style-loader'
+            })
           }
-
-          }
+        }
       },
 
       {
@@ -74,14 +72,22 @@ module.exports = {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
-          name: 'img/[name].[ext]?[hash]'
+          name: 'img/[name].[hash:7].[ext]'
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'file-loader',
+        options: {
+          limit: 10000,
+          name: 'fonts/[name].[hash:7].[ext]'
         }
       }
     ]
   },
   plugins: [
     new ExtractTextPlugin({
-      filename:'styles.css',
+      filename: 'styles.css',
       allChunks: true
     })
   ]
